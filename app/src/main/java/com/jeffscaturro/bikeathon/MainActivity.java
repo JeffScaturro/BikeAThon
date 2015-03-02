@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.parse.Parse;
+
 import java.util.Locale;
 
 
@@ -39,6 +41,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Parse Configuration
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "LQ4axs1j6w2wQAkgLbxsBSy3QVuCzeSSBSqYZKYO", "D48MVgGzQK8fYrzaWO3p9zuhXnhCcjwKatnbZ5Nz");
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
