@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Bike A Thon</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="home_header">Home</string>
+    <string name="sign_up_header">Pick a Time!</string>
+
+</resources>
