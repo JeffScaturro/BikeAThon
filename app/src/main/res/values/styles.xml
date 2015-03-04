@@ -3,11 +3,18 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:actionBarStyle">@style/BTActionBar</item>
+        <item name="android:actionBarTabStyle">@style/MyActionBarTabs</item>
     </style>
 
-    <style name="BTActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/blue</item>
+    <!-- ActionBar tabs styles -->
+    <style name="MyActionBarTabs"
+           parent="Widget.AppCompat.Light.ActionBar.TabView">
+        <!-- tab indicator -->
+        <item name="android:background">@color/gold</item>
     </style>
+
+    <string name="DayButton" parent="Theme.AppCompat.Light">
+        <item name="backgroundColor">@color/gold</item>
+    </string>
 
 </resources>

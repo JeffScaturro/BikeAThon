@@ -1,4 +1,4 @@
-package com.jeffscaturro.bikeathon;
+package com.jeffscaturro.bikeathon.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,19 +8,23 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.jeffscaturro.bikeathon.Activities.Fragments.ItemFragment;
+import com.jeffscaturro.bikeathon.R;
 import com.parse.Parse;
 
 import java.util.Locale;
 
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, ItemFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,6 +54,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.baby_blue));
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.color.gold));
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -86,23 +94,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return false;
     }
 
     @Override
@@ -120,11 +112,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
+    public void onFragmentInteraction(String id) {
+        // Nada
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    public class SectionsPagerAdapter extends FragmentPagerAdapter  {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -134,7 +130,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-           return position == 0 ? PlaceholderFragment.newInstance() : TimeSlotFragment.newInstance();
+           return position == 0 ? PlaceholderFragment.newInstance() : PickDayFragment.newInstance();
         }
 
         @Override
@@ -183,29 +179,107 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class TimeSlotFragment extends Fragment {
+    public static class PickDayFragment extends Fragment {
 
-        ListView mListView;
+        public static String mUser;
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static TimeSlotFragment newInstance() {
-            return new TimeSlotFragment();
+        EditText mUserName;
+        Button mShowDays;
+        Button march24th;
+        Button march25th;
+        Button march26th;
+
+        public static PickDayFragment newInstance() {
+            return new PickDayFragment();
         }
 
-        public TimeSlotFragment() {
+        public PickDayFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_time_slot, container, false);
+            final View rootView = inflater.inflate(R.layout.fragment_pick_day, container, false);
 
-            mListView = (ListView)rootView.findViewById(R.id.time_slot_list_view);
+            mUserName = (EditText)rootView.findViewById(R.id.users_name);
+            mUserName.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    mUser = s.toString();
+                }
+            });
+            mUserName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    mUserName.setCursorVisible(hasFocus);
+                    if (hasFocus) {
+                        mUserName.requestFocus();
+                    } else {
+                        mUserName.clearFocus();
+                    }
+                }
+            });
+
+            mShowDays = (Button)rootView.findViewById(R.id.show_days);
+            mShowDays.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rootView.findViewById(R.id.day_selection).setVisibility(View.VISIBLE);
+                    getActivity().getSupportFragmentManager()
+                            .popBackStack();
+                }
+            });
+
+            march24th = (Button)rootView.findViewById(R.id.march24thButton);
+            march24th.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rootView.findViewById(R.id.day_selection).setVisibility(View.INVISIBLE);
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack("ItemFragment")
+                            .add(R.id.fragment_container, ItemFragment.newInstance("March24th"))
+                            .commit();
+                }
+            });
+
+            march25th = (Button)rootView.findViewById(R.id.march25thButton);
+            march25th.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rootView.findViewById(R.id.day_selection).setVisibility(View.INVISIBLE);
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack("ItemFragment")
+                            .add(R.id.fragment_container, ItemFragment.newInstance("March25th"))
+                            .commit();
+                }
+            });
+
+            march26th = (Button)rootView.findViewById(R.id.march26thButton);
+            march26th.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rootView.findViewById(R.id.day_selection).setVisibility(View.INVISIBLE);
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .addToBackStack("ItemFragment")
+                            .add(R.id.fragment_container, ItemFragment.newInstance("March26th"))
+                            .commit();
+                }
+            });
 
             return rootView;
+        }
+
+        public static String getUser() {
+            return mUser;
         }
     }
 }

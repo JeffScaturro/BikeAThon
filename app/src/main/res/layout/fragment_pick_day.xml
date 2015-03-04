@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:background="@color/baby_blue">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp">
+
+        <EditText
+            android:id="@+id/users_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/your_name"
+            android:textColor="@color/white"
+            android:background="@drawable/gold_button_press"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <Button
+            android:id="@+id/show_days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_days"
+            android:textColor="@color/white"
+            android:background="@drawable/gold_button_press"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/day_selection"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/march24thButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/March24th"
+                android:textColor="@color/white"
+                android:background="@drawable/gold_button_press"
+                android:layout_margin="16dp"/>
+
+            <Button
+                android:id="@+id/march25thButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/March25th"
+                android:textColor="@color/white"
+                android:background="@drawable/gold_button_press"
+                android:layout_margin="16dp"/>
+
+            <Button
+                android:id="@+id/march26thButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/March26th"
+                android:textColor="@color/white"
+                android:background="@drawable/gold_button_press"
+                android:layout_margin="16dp"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>
