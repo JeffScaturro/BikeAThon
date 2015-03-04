@@ -19,7 +19,6 @@ import android.widget.EditText;
 
 import com.jeffscaturro.bikeathon.Activities.Fragments.ItemFragment;
 import com.jeffscaturro.bikeathon.R;
-import com.parse.Parse;
 
 import java.util.Locale;
 
@@ -46,18 +45,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Parse Configuration
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "LQ4axs1j6w2wQAkgLbxsBSy3QVuCzeSSBSqYZKYO", "D48MVgGzQK8fYrzaWO3p9zuhXnhCcjwKatnbZ5Nz");
-
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.baby_blue));
+//        actionBar.setBackgroundDrawable(getResources().getDrawable(R.color.baby_blue));
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.color.gold));
+        actionBar.setStackedBackgroundDrawable(getResources().getDrawable(R.color.blue));
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -280,6 +274,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         public static String getUser() {
             return mUser;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (findViewById(R.id.day_selection).getVisibility() == View.INVISIBLE) {
+            findViewById(R.id.day_selection).setVisibility(View.VISIBLE);
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
         }
     }
 }

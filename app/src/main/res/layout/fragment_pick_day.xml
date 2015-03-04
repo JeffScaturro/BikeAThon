@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
-    android:background="@color/baby_blue">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,8 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/your_name"
+            android:textColorHint="@color/white"
             android:textColor="@color/white"
-            android:background="@drawable/gold_button_press"
+            android:background="@drawable/button_blue_press"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:layout_marginLeft="16dp"
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:text="@string/show_days"
             android:textColor="@color/white"
-            android:background="@drawable/gold_button_press"
+            android:background="@drawable/button_blue_press"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:layout_marginLeft="16dp"
@@ -57,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/March24th"
                 android:textColor="@color/white"
-                android:background="@drawable/gold_button_press"
+                android:background="@drawable/button_blue_press"
                 android:layout_margin="16dp"/>
 
             <Button
@@ -66,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/March25th"
                 android:textColor="@color/white"
-                android:background="@drawable/gold_button_press"
+                android:background="@drawable/button_blue_press"
                 android:layout_margin="16dp"/>
 
             <Button
@@ -75,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/March26th"
                 android:textColor="@color/white"
-                android:background="@drawable/gold_button_press"
+                android:background="@drawable/button_blue_press"
                 android:layout_margin="16dp"/>
 
         </LinearLayout>

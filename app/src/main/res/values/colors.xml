@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#fff</color>
-    <color name="blue">#0066FF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blue">#005596</color>
+    <color name="dark_blue">#BF005596</color>
     <color name="baby_blue">#3385D6</color>
-    <color name="gold">#CBA135</color>
+    <color name="gold">#E7A614</color>
+    <color name="dark_gold">#BFE7A614</color>
 </resources>

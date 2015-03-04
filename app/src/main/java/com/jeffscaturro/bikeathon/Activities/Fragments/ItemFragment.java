@@ -123,6 +123,12 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
             return;
         }
 
+        final String user = MainActivity.PickDayFragment.getUser();
+        if (user == null || user.trim().equals("")) {
+            Toast.makeText(getActivity(), "Please set your name above before registering.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         for (int i = 0; i < bikeRiders.size(); i++) {
             if (bikeRiders.get(i).trim().equals("")) {
                 availableSlots.add(i);
@@ -145,7 +151,7 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                     String strName = availableSlots.getItem(which).toString();
                     AlertDialog.Builder builderInner = new AlertDialog.Builder(getActivity());
                     builderInner.setMessage(strName);
-                    builderInner.setTitle("Signing up " + MainActivity.PickDayFragment.getUser() + " for Bike")
+                    builderInner.setTitle("Signing up " + user + " for Bike")
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
