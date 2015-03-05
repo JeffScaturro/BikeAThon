@@ -45,7 +45,7 @@ public class TimeSlotAdapter extends ArrayAdapter<TimeSlot> {
             if (bikesOpen != null) {
                 timeSlot.checkAvailability();
                 if (timeSlot.doesHasOpenBike()) {
-                    bikesOpen.setText("Open bikes!");
+                    bikesOpen.setText("Open bike!");
                     v.setBackground(getContext().getResources().getDrawable(R.color.blue));
                 } else {
                     bikesOpen.setText("All bikes full.");
