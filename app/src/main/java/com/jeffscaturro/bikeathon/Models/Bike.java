@@ -28,6 +28,9 @@ public class Bike extends ParseObject {
 
     public void setRiderName(String name) {
         put("riderName", name);
+        if (!name.trim().equals("")) {
+            setOpen(false);
+        }
     }
 
     public boolean getOpen() {

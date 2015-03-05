@@ -17,7 +17,6 @@ public class TimeSlot extends ParseObject {
         setHasOpenBike(openBikes);
     }
 
-
     public String getTime() {
         return getString("time");
     }
@@ -34,11 +33,23 @@ public class TimeSlot extends ParseObject {
         put("bikes", bikes);
     }
 
-    public boolean isHasOpenBike() {
+    public boolean doesHasOpenBike() {
         return getBoolean("openBike");
     }
 
     public void setHasOpenBike(boolean hasOpenBike) {
         put("openBike", hasOpenBike);
+    }
+
+    public void checkAvailability() {
+        ArrayList<Bike> mBikes = getBikes();
+        boolean flag = false;
+        for (int i = 0; i < mBikes.size(); i++) {
+            if (mBikes.get(i).getOpen()) {
+                flag = true;
+            }
+        }
+
+        setHasOpenBike(flag);
     }
 }

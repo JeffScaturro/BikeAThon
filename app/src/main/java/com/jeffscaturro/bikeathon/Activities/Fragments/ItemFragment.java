@@ -11,13 +11,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.jeffscaturro.bikeathon.Activities.MainActivity;
+import com.jeffscaturro.bikeathon.Adapters.TimeSlotAdapter;
+import com.jeffscaturro.bikeathon.Models.Bike;
+import com.jeffscaturro.bikeathon.Models.Day;
+import com.jeffscaturro.bikeathon.Models.TimeSlot;
 import com.jeffscaturro.bikeathon.R;
-import com.parse.FindCallback;
-import com.parse.ParseObject;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -35,9 +38,11 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private static int selectedBike;
-
-    List<ParseObject> mTimeSlots;
-    boolean doneLoading = false;
+    private Day mDay;
+    private TimeSlot mTimeSlot;
+    private Bike mBike;
+    private ArrayList<TimeSlot> mTimeSlots;
+    private boolean doneLoading = false;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,22 +70,24 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
         }
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(mParam1);
-        query.orderByAscending("createdAt");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> timeList, com.parse.ParseException e) {
-                if (e == null) {
-                    mTimeSlots = timeList;
-                    Log.i("Time", "Retrieved " + timeList.size() + " times");
-                    List<String> timeSlots = new ArrayList<>();
-                    for (int i = 0; i < timeList.size(); i++) {
-                        timeSlots.add((String)timeList.get(i).get("time"));
-                    }
-                    setListAdapter(new ArrayAdapter<>(getActivity(),
-                            android.R.layout.simple_list_item_1, android.R.id.text1, timeSlots));
-                    doneLoading = true;
+        ParseQuery<Day> query = ParseQuery.getQuery(Day.class);
+        query.whereEqualTo("dayTitle", mParam1);
+        query.include("timeSlots");
+        query.include("timeSlots.bikes");
+        query.getFirstInBackground(new GetCallback<Day>() {
+            @Override
+            public void done(Day day, ParseException e) {
+                if (day == null) {
+                    // Failed
                 } else {
-                    Log.i("Time", "Error: " + e.getMessage());
+                    mDay = day;
+
+                    mTimeSlots = mDay.getTimeSlots();
+                    Log.i("Time", "Retrieved " + mTimeSlots.size() + " times");
+
+                    setListAdapter(new TimeSlotAdapter(getActivity(), R.layout.time_slot_row, mTimeSlots));
+
+                    doneLoading = true;
                 }
             }
         });
@@ -113,7 +120,14 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
             return;
         }
 
-        final ArrayList<String> bikeRiders = (ArrayList<String>) mTimeSlots.get(position).get("bikes");
+        // If user has not set their name, do nothing.
+        final String user = MainActivity.PickDayFragment.getUser();
+        if (user == null || user.trim().equals("")) {
+            Toast.makeText(getActivity(), "Please set your name above before registering.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        final ArrayList<Bike> bikeRiders = mTimeSlots.get(position).getBikes();
 
         final ArrayAdapter<Integer> availableSlots = new ArrayAdapter<>(getActivity(), R.layout.bike_dropdown_item);
 
@@ -123,16 +137,9 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
             return;
         }
 
-        // If user has not set their name, do nothing.
-        final String user = MainActivity.PickDayFragment.getUser();
-        if (user == null || user.trim().equals("")) {
-            Toast.makeText(getActivity(), "Please set your name above before registering.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
         for (int i = 0; i < bikeRiders.size(); i++) {
-            if (bikeRiders.get(i).trim().equals("")) {
-                availableSlots.add(i);
+            if (bikeRiders.get(i).getRiderName().trim().equals("")) {
+                availableSlots.add((i + 1));
             }
         }
 
@@ -164,10 +171,6 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //TODO: Send data, updating Parse
-                            ParseObject object = mTimeSlots.get(position);
-                            bikeRiders.set(selectedBike, user);
-                            object.put("bikes", bikeRiders);
-                            object.saveInBackground();
                             dialog.dismiss();
                         }
                     })
