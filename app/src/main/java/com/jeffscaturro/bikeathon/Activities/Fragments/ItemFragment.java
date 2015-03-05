@@ -34,6 +34,7 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
+    private static int selectedBike;
 
     List<ParseObject> mTimeSlots;
     boolean doneLoading = false;
@@ -83,9 +84,6 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                 }
             }
         });
-
-        // TODO: Change Adapter to display your content
-
     }
 
     @Override
@@ -106,23 +104,26 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
 
+        // Do nothing if we have not received all the time slots.
         if (!doneLoading) {
             Toast.makeText(getActivity(), "We have not finished loading all the bikers...", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        ArrayList<String> bikeRiders = (ArrayList<String>) mTimeSlots.get(position).get("bikes");
+        final ArrayList<String> bikeRiders = (ArrayList<String>) mTimeSlots.get(position).get("bikes");
 
-        final ArrayAdapter<Integer> availableSlots = new ArrayAdapter<Integer>(getActivity(), android.R.layout.select_dialog_singlechoice);
+        final ArrayAdapter<Integer> availableSlots = new ArrayAdapter<>(getActivity(), R.layout.bike_dropdown_item);
 
+        // Do nothing if we have not loaded all the bike information.
         if (bikeRiders == null) {
             Toast.makeText(getActivity(), "We have not finished loading all the bikers...", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // If user has not set their name, do nothing.
         final String user = MainActivity.PickDayFragment.getUser();
         if (user == null || user.trim().equals("")) {
             Toast.makeText(getActivity(), "Please set your name above before registering.", Toast.LENGTH_SHORT).show();
@@ -149,6 +150,7 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String strName = availableSlots.getItem(which).toString();
+                    selectedBike = which;
                     AlertDialog.Builder builderInner = new AlertDialog.Builder(getActivity());
                     builderInner.setMessage(strName);
                     builderInner.setTitle("Signing up " + user + " for Bike")
@@ -161,6 +163,11 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                     .setPositiveButton("Sign Up", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            //TODO: Send data, updating Parse
+                            ParseObject object = mTimeSlots.get(position);
+                            bikeRiders.set(selectedBike, user);
+                            object.put("bikes", bikeRiders);
+                            object.saveInBackground();
                             dialog.dismiss();
                         }
                     })

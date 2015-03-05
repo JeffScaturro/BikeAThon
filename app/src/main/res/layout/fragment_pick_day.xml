@@ -5,7 +5,6 @@
     android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_vertical"
     android:background="@color/white">
 
     <LinearLayout
@@ -46,40 +45,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/day_selection"
+        <ScrollView
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/march24thButton"
+            <LinearLayout
+                android:id="@+id/day_selection"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/March24th"
-                android:textColor="@color/white"
-                android:background="@drawable/button_blue_press"
-                android:layout_margin="16dp"/>
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/march25thButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/March25th"
-                android:textColor="@color/white"
-                android:background="@drawable/button_blue_press"
-                android:layout_margin="16dp"/>
+                <Button
+                    android:id="@+id/march24thButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/March24th"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_blue_press"
+                    android:layout_margin="16dp"/>
 
-            <Button
-                android:id="@+id/march26thButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/March26th"
-                android:textColor="@color/white"
-                android:background="@drawable/button_blue_press"
-                android:layout_margin="16dp"/>
+                <Button
+                    android:id="@+id/march25thButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/March25th"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_blue_press"
+                    android:layout_margin="16dp"/>
 
-        </LinearLayout>
+                <Button
+                    android:id="@+id/march26thButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/March26th"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_blue_press"
+                    android:layout_margin="16dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </FrameLayout>
 

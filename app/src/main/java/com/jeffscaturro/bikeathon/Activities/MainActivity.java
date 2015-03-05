@@ -195,6 +195,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                                  Bundle savedInstanceState) {
             final View rootView = inflater.inflate(R.layout.fragment_pick_day, container, false);
 
+            rootView.findViewById(R.id.day_selection).setVisibility(View.VISIBLE);
+            getActivity().getSupportFragmentManager().popBackStack();
+
             mUserName = (EditText)rootView.findViewById(R.id.users_name);
             mUserName.addTextChangedListener(new TextWatcher() {
                 @Override
