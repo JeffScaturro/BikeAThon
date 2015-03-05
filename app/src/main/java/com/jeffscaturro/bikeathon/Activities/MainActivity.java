@@ -18,8 +18,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.jeffscaturro.bikeathon.Activities.Fragments.ItemFragment;
+import com.jeffscaturro.bikeathon.Models.Bike;
+import com.jeffscaturro.bikeathon.Models.Day;
+import com.jeffscaturro.bikeathon.Models.TimeSlot;
 import com.jeffscaturro.bikeathon.R;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 
@@ -237,6 +241,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             march24th.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    // Remove Below
+                    // Initially create new Parse Object to send
+                    ArrayList<Bike> newBikeList = new ArrayList<Bike>();
+                    for (int i = 1; i <= 7; i++) {
+                        Bike newBike = new Bike(i, "", true);
+//                        newBike.saveInBackground();
+                        newBikeList.add(newBike);
+                    }
+
+                    ArrayList<TimeSlot> newTimes = new ArrayList<TimeSlot>();
+                    for (int i = 1; i <= 12; i++) {
+                        TimeSlot newTimeSlot = new TimeSlot(i + " - " + i + 1 + " pm", newBikeList, true);
+//                        newTimeSlot.saveInBackground();
+                        newTimes.add(newTimeSlot);
+                    }
+
+                    Day newDay = new Day("March 24th, 2015", newTimes);
+                    newDay.saveInBackground();
+                    // Remove ^^^
+
                     rootView.findViewById(R.id.day_selection).setVisibility(View.INVISIBLE);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
