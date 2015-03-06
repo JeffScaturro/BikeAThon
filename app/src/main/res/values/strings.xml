@@ -5,9 +5,9 @@
     <string name="action_settings">Settings</string>
 
     <string name="home_header">Home</string>
-    <string name="sign_up_header">Pick a Time!</string>
-    <string name="your_name">Your name...</string>
-
+    <string name="sign_up_header">Register!</string>
+    <string name="your_name">Name...</string>
+    <string name="your_org">Organization...</string>
     <!-- Actions -->
     <string name="show_days">Show Days</string>
 

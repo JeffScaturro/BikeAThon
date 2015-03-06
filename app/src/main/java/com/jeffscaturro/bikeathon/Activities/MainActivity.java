@@ -176,8 +176,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public static class PickDayFragment extends Fragment {
 
         public static String mUser;
+        public static String mUserOrgStr;
 
         EditText mUserName;
+        EditText mUserOrg;
         Button mShowDays;
         Button march24th;
         Button march25th;
@@ -223,11 +225,38 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 }
             });
 
+            mUserOrg = (EditText)rootView.findViewById(R.id.users_org);
+            mUserOrg.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    mUserOrgStr = s.toString();
+                }
+            });
+            mUserOrg.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    mUserOrg.setCursorVisible(hasFocus);
+                    if (hasFocus) {
+                        mUserOrg.requestFocus();
+                    } else {
+                        mUserOrg.clearFocus();
+                    }
+                }
+            });
+
             mShowDays = (Button)rootView.findViewById(R.id.show_days);
+            mShowDays.setVisibility(View.GONE);
             mShowDays.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     rootView.findViewById(R.id.day_selection).setVisibility(View.VISIBLE);
+                    mShowDays.setVisibility(View.GONE);
                     getActivity().getSupportFragmentManager()
                             .popBackStack();
                 }
@@ -238,6 +267,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 @Override
                 public void onClick(View v) {
                     rootView.findViewById(R.id.day_selection).setVisibility(View.INVISIBLE);
+                    mShowDays.setVisibility(View.VISIBLE);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack("ItemFragment")
@@ -251,6 +281,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 @Override
                 public void onClick(View v) {
                     rootView.findViewById(R.id.day_selection).setVisibility(View.INVISIBLE);
+                    mShowDays.setVisibility(View.VISIBLE);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack("ItemFragment")
@@ -264,6 +295,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 @Override
                 public void onClick(View v) {
                     rootView.findViewById(R.id.day_selection).setVisibility(View.INVISIBLE);
+                    mShowDays.setVisibility(View.VISIBLE);
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack("ItemFragment")
@@ -278,12 +310,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public static String getUser() {
             return mUser;
         }
+
+        public static String getUserOrg() {
+            return mUserOrgStr;
+        }
     }
 
     @Override
     public void onBackPressed() {
         if (findViewById(R.id.day_selection).getVisibility() == View.INVISIBLE) {
             findViewById(R.id.day_selection).setVisibility(View.VISIBLE);
+            findViewById(R.id.show_days).setVisibility(View.GONE);
             getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();

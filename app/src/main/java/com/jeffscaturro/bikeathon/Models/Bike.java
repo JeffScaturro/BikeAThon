@@ -8,7 +8,7 @@ public class Bike extends ParseObject {
 
     public Bike() { }
 
-    public Bike(int num, String name, boolean open) {
+    public Bike(int num, String name, String org, boolean open) {
         setBikeNumber(num);
         setRiderName(name);
         setOpen(open);
@@ -31,6 +31,14 @@ public class Bike extends ParseObject {
         if (!name.trim().equals("")) {
             setOpen(false);
         }
+    }
+
+    public String getRiderOrg() {
+        return getString("riderOrg");
+    }
+
+    public void setRiderOrg(String org) {
+        put("riderOrg", org);
     }
 
     public boolean getOpen() {
