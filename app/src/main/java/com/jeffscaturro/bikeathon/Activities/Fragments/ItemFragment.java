@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -92,20 +93,20 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
 
         // Do nothing if we have not received all the time slots.
         if (!doneLoading) {
-            Toast.makeText(getActivity(), "We have not finished loading all the bikers...", Toast.LENGTH_SHORT).show();
+            toastMe("We have not finished loading all the bikers...");
             return;
         }
 
         // If user has not set their name, do nothing.
         final String user = MainActivity.PickDayFragment.getUser();
         if (user == null || user.trim().equals("")) {
-            Toast.makeText(getActivity(), "Please set your name above before registering.", Toast.LENGTH_SHORT).show();
+            toastMe("Please set your name above before registering.");
             return;
         }
 
         final String userOrg = MainActivity.PickDayFragment.getUserOrg();
         if (userOrg == null || userOrg.trim().equals("")) {
-            Toast.makeText(getActivity(), "Please set your organization above before registering.", Toast.LENGTH_SHORT).show();
+            toastMe("Please set your organization above before registering.");
             return;
         }
 
@@ -115,7 +116,7 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
 
         // Do nothing if we have not loaded all the bike information.
         if (bikeRiders == null) {
-            Toast.makeText(getActivity(), "We have not finished loading all the bikers...", Toast.LENGTH_SHORT).show();
+            toastMe("We have not finished loading all the bikers...");
             return;
         }
 
@@ -126,7 +127,7 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
         }
 
         if (availableSlots.getCount() == 0) {
-            Toast.makeText(getActivity(), "No open bikes for that slot, find one that does!", Toast.LENGTH_SHORT).show();
+            toastMe("No open bikes for that slot, find one that does!");
             return;
         }
 
@@ -166,7 +167,7 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                                 mDay.save();
                                 refreshData();
                             } catch (ParseException e) {
-                                Toast.makeText(getActivity(), "There was an error signing you up for that spot.", Toast.LENGTH_SHORT).show();
+                                toastMe("There was an error signing you up for that spot.");
                             }
                             dialog.dismiss();
                         }
@@ -181,6 +182,12 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
             // fragment is attached to one) that an item has been selected.
 //            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
         }
+    }
+
+    public void toastMe(String text) {
+        Toast toast = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER, 0, 144);
+        toast.show();
     }
 
     public void refreshData() {

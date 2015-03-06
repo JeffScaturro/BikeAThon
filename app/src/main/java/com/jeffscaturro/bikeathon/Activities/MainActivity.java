@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.jeffscaturro.bikeathon.Activities.Fragments.ItemFragment;
 import com.jeffscaturro.bikeathon.R;
@@ -151,6 +152,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     public static class PlaceholderFragment extends Fragment {
 
+//        static ArrayList<Drawable> mImages;
+        static int[] mImages;
+        static ImageView mImageView;
+        static int photoIndex;
+
+        Button mPreviousButton;
+        Button mNextButton;
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -166,7 +175,44 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+            mImages = new int[] { R.drawable.pkp_ability_experience_logo, R.drawable.img_two, R.drawable.img_three, R.drawable.img_four, R.drawable.img_one, R.drawable.img_five };
+
+            photoIndex = 0;
+            mImageView = (ImageView)rootView.findViewById(R.id.image);
+            mImageView.setImageResource(mImages[photoIndex]);
+
+            mPreviousButton = (Button)rootView.findViewById(R.id.previous_button);
+            mPreviousButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    previousPhoto();
+                }
+            });
+
+            mNextButton = (Button)rootView.findViewById(R.id.next_button);
+            mNextButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    nextPhoto();
+                }
+            });
+
             return rootView;
+        }
+
+        public void previousPhoto() {
+            photoIndex--;
+            if (photoIndex < 0)
+                photoIndex = 5;
+            mImageView.setImageResource(mImages[photoIndex]);
+        }
+
+        public void nextPhoto() {
+            photoIndex++;
+            if (photoIndex > 5)
+                photoIndex = 0;
+            mImageView.setImageResource(mImages[photoIndex]);
         }
     }
 

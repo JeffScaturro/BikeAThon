@@ -8,8 +8,11 @@
     <string name="sign_up_header">Register!</string>
     <string name="your_name">Name...</string>
     <string name="your_org">Organization...</string>
+
     <!-- Actions -->
     <string name="show_days">Show Days</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
 
     <!-- Dates -->
     <string name="March24th">March 24th, 2015</string>

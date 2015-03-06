@@ -16,8 +16,8 @@
         <item name="android:background">@color/gold</item>
     </style>
 
-    <string name="DayButton" parent="Theme.AppCompat.Light">
-        <item name="backgroundColor">@color/gold</item>
-    </string>
+    <style name="MyButtons" parent="Widget.AppCompat.Light.ActionButton">
+        <item name="android:background">@color/blue</item>
+    </style>
 
 </resources>

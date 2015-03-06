@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="16dp"
@@ -7,11 +7,63 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/pick_day_options">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/day_selection"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/march24thButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/March24th"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_blue_press"
+                    android:layout_margin="16dp"/>
+
+                <Button
+                    android:id="@+id/march25thButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/March25th"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_blue_press"
+                    android:layout_margin="16dp"/>
+
+                <Button
+                    android:id="@+id/march26thButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/March26th"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_blue_press"
+                    android:layout_margin="16dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </FrameLayout>
+
     <LinearLayout
+        android:id="@+id/pick_day_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp">
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp">
 
         <LinearLayout
             android:id="@+id/user_info"
@@ -67,52 +119,4 @@
 
     </LinearLayout>
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/day_selection"
-                android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/march24thButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/March24th"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_blue_press"
-                    android:layout_margin="16dp"/>
-
-                <Button
-                    android:id="@+id/march25thButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/March25th"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_blue_press"
-                    android:layout_margin="16dp"/>
-
-                <Button
-                    android:id="@+id/march26thButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/March26th"
-                    android:textColor="@color/white"
-                    android:background="@drawable/button_blue_press"
-                    android:layout_margin="16dp"/>
-
-            </LinearLayout>
-
-        </ScrollView>
-
-    </FrameLayout>
-
-</LinearLayout>
+</RelativeLayout>

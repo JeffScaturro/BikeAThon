@@ -17,24 +17,27 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/pkp_ability_experience_logo"/>
+            android:layout_height="match_parent"/>
 
         <Button
+            android:id="@+id/previous_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/previous11"
+            android:text="@string/previous"
+            android:background="@android:color/transparent"
             android:textColor="@color/gold"
-            android:layout_alignLeft="@id/image"
-            android:layout_alignBottom="@id/image"/>
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"/>
 
         <Button
+            android:id="@+id/next_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/next15"
+            android:text="@string/next"
+            android:background="@android:color/transparent"
             android:textColor="@color/gold"
-            android:layout_alignRight="@id/image"
-            android:layout_alignBottom="@id/image"/>
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
 
