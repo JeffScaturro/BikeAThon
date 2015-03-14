@@ -21,7 +21,9 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A fragment representing a list of Items.
@@ -94,6 +96,22 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
         // Do nothing if we have not received all the time slots.
         if (!doneLoading) {
             toastMe("We have not finished loading all the bikers...");
+            return;
+        }
+
+        try {
+            String pattern = "dd-MM-yyyy HH:mm:ss";
+            SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+            Date mustBePassed = dateFormat.parse("17-03-2015 12:00:00");
+
+            Date now = new Date();
+
+            if (now.compareTo(mustBePassed) < 0) {
+                toastMe("Registration is not yet open...");
+                return;
+            }
+        } catch(java.text.ParseException e) {
+            toastMe("Error checking if registration is open, try again.");
             return;
         }
 
@@ -176,12 +194,6 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                 }
             });
             builderSingle.create().show();
-
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-//            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
     }
 
     public void toastMe(String text) {
@@ -205,6 +217,10 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
 
                     mTimeSlots = mDay.getTimeSlots();
                     Log.i("Time", "Retrieved " + mTimeSlots.size() + " times");
+
+                    if (getActivity() == null) {
+                        return;
+                    }
 
                     mTimeSlotAdapter = new TimeSlotAdapter(getActivity(), R.layout.time_slot_row, mTimeSlots);
                     setListAdapter(mTimeSlotAdapter);
@@ -231,5 +247,4 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
-
 }
