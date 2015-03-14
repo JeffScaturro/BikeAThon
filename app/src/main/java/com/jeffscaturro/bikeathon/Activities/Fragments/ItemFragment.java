@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -149,7 +148,6 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
             return;
         }
 
-        Log.i("ItemFragment", "Riders: " + availableSlots);
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity())
             .setIcon(R.drawable.ic_launcher)
             .setTitle("Select a Bike")
@@ -216,7 +214,6 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                     mDay = day;
 
                     mTimeSlots = mDay.getTimeSlots();
-                    Log.i("Time", "Retrieved " + mTimeSlots.size() + " times");
 
                     if (getActivity() == null) {
                         return;
