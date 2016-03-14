@@ -107,7 +107,7 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
         try {
             String pattern = "dd-MM-yyyy HH:mm:ss";
             SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-            Date mustBePassed = dateFormat.parse("10-03-2016 12:00:00");
+            Date mustBePassed = dateFormat.parse("16-03-2016 12:00:00");
 
             Date now = new Date();
 
