@@ -139,9 +139,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.home_header).toUpperCase(l);
-                case 1:
                     return getString(R.string.sign_up_header).toUpperCase(l);
+
+                case 1:
+                    return getString(R.string.home_header).toUpperCase(l);
             }
             return null;
         }
@@ -183,37 +184,37 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             mImageView.setImageResource(mImages[photoIndex]);
 
             mPreviousButton = (Button)rootView.findViewById(R.id.previous_button);
-            mPreviousButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    previousPhoto();
-                }
-            });
+//            mPreviousButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    previousPhoto();
+//                }
+//            });
 
             mNextButton = (Button)rootView.findViewById(R.id.next_button);
-            mNextButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    nextPhoto();
-                }
-            });
+//            mNextButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    nextPhoto();
+//                }
+//            });
 
             return rootView;
         }
 
-        public void previousPhoto() {
-            photoIndex--;
-            if (photoIndex < 0)
-                photoIndex = 5;
-            mImageView.setImageResource(mImages[photoIndex]);
-        }
-
-        public void nextPhoto() {
-            photoIndex++;
-            if (photoIndex > 5)
-                photoIndex = 0;
-            mImageView.setImageResource(mImages[photoIndex]);
-        }
+//        public void previousPhoto() {
+//            photoIndex--;
+//            if (photoIndex < 0)
+//                photoIndex = 5;
+//            mImageView.setImageResource(mImages[photoIndex]);
+//        }
+//
+//        public void nextPhoto() {
+//            photoIndex++;
+//            if (photoIndex > 5)
+//                photoIndex = 0;
+//            mImageView.setImageResource(mImages[photoIndex]);
+//        }
     }
 
     /**
@@ -317,7 +318,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack("ItemFragment")
-                            .add(R.id.fragment_container, ItemFragment.newInstance("March 24th, 2015"))
+                            .add(R.id.fragment_container, ItemFragment.newInstance("March 22nd, 2016"))
                             .commit();
                 }
             });
@@ -331,7 +332,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack("ItemFragment")
-                            .add(R.id.fragment_container, ItemFragment.newInstance("March 25th, 2015"))
+                            .add(R.id.fragment_container, ItemFragment.newInstance("March 23rd, 2016"))
                             .commit();
                 }
             });
@@ -345,7 +346,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     getActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .addToBackStack("ItemFragment")
-                            .add(R.id.fragment_container, ItemFragment.newInstance("March 26th, 2015"))
+                            .add(R.id.fragment_container, ItemFragment.newInstance("March 24th, 2016"))
                             .commit();
                 }
             });

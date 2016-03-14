@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,9 +21,14 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import com.android.volley.*;
+import com.android.volley.toolbox.*;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.*;
+
 
 /**
  * A fragment representing a list of Items.
@@ -101,7 +107,7 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
         try {
             String pattern = "dd-MM-yyyy HH:mm:ss";
             SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-            Date mustBePassed = dateFormat.parse("17-03-2015 12:00:00");
+            Date mustBePassed = dateFormat.parse("10-03-2016 12:00:00");
 
             Date now = new Date();
 
@@ -137,27 +143,65 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
             return;
         }
 
-        for (int i = 0; i < bikeRiders.size(); i++) {
-            if (bikeRiders.get(i).getRiderName().trim().equals("")) {
-                availableSlots.add((i + 1));
-            }
-        }
-
-        if (availableSlots.getCount() == 0) {
-            toastMe("No open bikes for that slot, find one that does!");
-            return;
-        }
-
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity())
             .setIcon(R.drawable.ic_launcher)
-            .setTitle("Select a Bike")
-            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            .setTitle("Please Confirm")
+            .setMessage("Are you sure you want to sign up for " + mDayName + " at " + mTimeSlots.get(position).getString("time") + "?")
+            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
+                    for (int i = 0; i < bikeRiders.size(); i++) {
+
+                        if (bikeRiders.get(i).getOpen()) {
+                            final Bike chosenBike = bikeRiders.get(i);
+
+                            chosenBike.setRiderName(user);
+                            chosenBike.setRiderOrg(userOrg);
+                            chosenBike.setRidingDay(mDayName);
+                            chosenBike.setRidingTime(mTimeSlots.get(position).getString("time"));
+                            try {
+
+                                chosenBike.save();
+                                mTimeSlots.get(position).save();
+                                mDay.save();
+                                refreshData();
+
+                                try {
+                                    postToGoogleSheets(user, userOrg, mDayName, mTimeSlots.get(position).getString("time"));
+                                } catch (Exception e) {
+
+                                }
+
+                                AlertDialog.Builder builderDouble = new AlertDialog.Builder(getActivity())
+                                        .setIcon(R.drawable.ic_launcher)
+                                        .setTitle("Success!")
+                                        .setMessage("You are now signed up to ride on " + mDayName + " at " + mTimeSlots.get(position).getString("time") + "!")
+                                        .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        });
+                                builderDouble.create().show();
+
+                            } catch (ParseException e) {
+                                toastMe("There was an error signing you up for that spot.");
+                            }
+                            dialog.dismiss();
+                            return;
+                        }
+                    }
                 }
             })
-            .setAdapter(availableSlots, new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+           /* .setAdapter(availableSlots, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String strName = availableSlots.getItem(which).toString();
@@ -165,33 +209,70 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
                     AlertDialog.Builder builderInner = new AlertDialog.Builder(getActivity());
                     builderInner.setMessage(strName);
                     builderInner.setTitle("Signing up " + user + " for Bike")
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setPositiveButton("Sign Up", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //TODO: Send data, updating Parse
-                            chosenBike.setRiderName(user);
-                            chosenBike.setRiderOrg(userOrg);
-                            try {
-                                chosenBike.save();
-                                mTimeSlots.get(position).save();
-                                mDay.save();
-                                refreshData();
-                            } catch (ParseException e) {
-                                toastMe("There was an error signing you up for that spot.");
-                            }
-                            dialog.dismiss();
-                        }
-                    })
-                    .show();
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton("Sign Up", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //TODO: Send data, updating Parse
+                                    chosenBike.setRiderName(user);
+                                    chosenBike.setRiderOrg(userOrg);
+                                    try {
+                                        chosenBike.save();
+                                        mTimeSlots.get(position).save();
+                                        mDay.save();
+                                        refreshData();
+                                    } catch (ParseException e) {
+                                        toastMe("There was an error signing you up for that spot.");
+                                    }
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
                 }
-            });
-            builderSingle.create().show();
+            });*/
+        builderSingle.create().show();
+    }
+
+    public void postToGoogleSheets(final String pName, final String pOrg, final String pDay, final String pTime) throws NetworkOnMainThreadException {
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+        final String url = "https://docs.google.com/forms/d/1HreENUdtNIwo8Y8Lq2JSlbmk8HVbaHweM2ZpmcydJIE/formResponse";
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("entry.877086558", pName);
+                params.put("entry.1498135098", pOrg);
+                params.put("entry.1424661284", pDay);
+                params.put("entry.2606285", pTime);
+                params.put("submit", "Submit");
+
+                return params;
+            }
+        };
+        queue.add(postRequest);
     }
 
     public void toastMe(String text) {
@@ -244,4 +325,6 @@ public class ItemFragment extends android.support.v4.app.ListFragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
+
+
 }

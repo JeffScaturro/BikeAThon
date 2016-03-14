@@ -1,6 +1,7 @@
 package com.jeffscaturro.bikeathon.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +46,13 @@ public class TimeSlotAdapter extends ArrayAdapter<TimeSlot> {
             if (bikesOpen != null) {
                 timeSlot.checkAvailability();
                 if (timeSlot.doesHasOpenBike()) {
-                    bikesOpen.setText("Open bike!");
+                    bikesOpen.setText("Bikes Available!");
+                    bikesOpen.setTextColor(Color.parseColor("#00FF00"));
                     v.setBackground(getContext().getResources().getDrawable(R.color.blue));
                 } else {
-                    bikesOpen.setText("All bikes full.");
-                    v.setBackground(getContext().getResources().getDrawable(R.color.gold));
+                    bikesOpen.setText("No Bikes Available");
+                    bikesOpen.setTextColor(Color.RED);
+                    v.setBackground(getContext().getResources().getDrawable(R.color.blue));
                 }
             }
         }

@@ -8,10 +8,12 @@ public class Bike extends ParseObject {
 
     public Bike() { }
 
-    public Bike(int num, String name, String org, boolean open) {
+    public Bike(int num, String name, String org, boolean open, String day, String time) {
         setBikeNumber(num);
         setRiderName(name);
         setOpen(open);
+        setRidingDay(day);
+        setRidingTime(time);
     }
 
     public int getBikeNumber() {
@@ -47,5 +49,20 @@ public class Bike extends ParseObject {
 
     public void setOpen(boolean value) {
         put("isOpen", value);
+    }
+
+    public void setRidingDay(String day) {
+        put("Day", day);
+    }
+
+    public void setRidingTime(String time) {
+        put("Time", time);
+    }
+
+    public String getRidingDay(){
+        return getString("Day");
+    }
+    public String getRidingTime(){
+        return getString("Time");
     }
 }
