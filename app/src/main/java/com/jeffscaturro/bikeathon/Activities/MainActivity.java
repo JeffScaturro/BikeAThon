@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.content.Intent;
+import android.net.Uri;
 
 import com.jeffscaturro.bikeathon.Activities.Fragments.ItemFragment;
 import com.jeffscaturro.bikeathon.R;
@@ -139,10 +141,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.sign_up_header).toUpperCase(l);
+                    return getString(R.string.home_header).toUpperCase(l);
 
                 case 1:
-                    return getString(R.string.home_header).toUpperCase(l);
+                    return getString(R.string.sign_up_header).toUpperCase(l);
             }
             return null;
         }
@@ -160,6 +162,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         Button mPreviousButton;
         Button mNextButton;
+        Button learnButton;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -181,9 +184,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             photoIndex = 0;
             mImageView = (ImageView)rootView.findViewById(R.id.image);
+            learnButton = (Button)rootView.findViewById(R.id.learnbutton);
+
             mImageView.setImageResource(mImages[photoIndex]);
 
-            mPreviousButton = (Button)rootView.findViewById(R.id.previous_button);
+            learnButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uriUrl = Uri.parse("http://www.abilityexperience.org/");
+                    Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                    startActivity(launchBrowser);
+                }
+            });
+
+//            mPreviousButton = (Button)rootView.findViewById(R.id.previous_button);
 //            mPreviousButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -191,7 +205,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //                }
 //            });
 
-            mNextButton = (Button)rootView.findViewById(R.id.next_button);
+//            mNextButton = (Button)rootView.findViewById(R.id.next_button);
 //            mNextButton.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -215,6 +229,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 //                photoIndex = 0;
 //            mImageView.setImageResource(mImages[photoIndex]);
 //        }
+
     }
 
     /**
@@ -373,4 +388,5 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             super.onBackPressed();
         }
     }
+
 }
