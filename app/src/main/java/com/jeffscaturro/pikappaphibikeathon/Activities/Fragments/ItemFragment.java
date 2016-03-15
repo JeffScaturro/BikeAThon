@@ -1,4 +1,4 @@
-package com.jeffscaturro.bikeathon.Activities.Fragments;
+package com.jeffscaturro.pikappaphibikeathon.Activities.Fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,12 +11,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.jeffscaturro.bikeathon.Activities.MainActivity;
-import com.jeffscaturro.bikeathon.Adapters.TimeSlotAdapter;
-import com.jeffscaturro.bikeathon.Models.Bike;
-import com.jeffscaturro.bikeathon.Models.Day;
-import com.jeffscaturro.bikeathon.Models.TimeSlot;
-import com.jeffscaturro.bikeathon.R;
+import com.jeffscaturro.pikappaphibikeathon.Activities.MainActivity;
+import com.jeffscaturro.pikappaphibikeathon.Adapters.TimeSlotAdapter;
+import com.jeffscaturro.pikappaphibikeathon.Models.Bike;
+import com.jeffscaturro.pikappaphibikeathon.Models.Day;
+import com.jeffscaturro.pikappaphibikeathon.Models.TimeSlot;
+import com.jeffscaturro.pikappaphibikeathon.R;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;

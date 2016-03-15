@@ -1,10 +1,10 @@
-package com.jeffscaturro.bikeathon;
+package com.jeffscaturro.pikappaphibikeathon;
 
 import android.app.Application;
 
-import com.jeffscaturro.bikeathon.Models.Bike;
-import com.jeffscaturro.bikeathon.Models.Day;
-import com.jeffscaturro.bikeathon.Models.TimeSlot;
+import com.jeffscaturro.pikappaphibikeathon.Models.Bike;
+import com.jeffscaturro.pikappaphibikeathon.Models.Day;
+import com.jeffscaturro.pikappaphibikeathon.Models.TimeSlot;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

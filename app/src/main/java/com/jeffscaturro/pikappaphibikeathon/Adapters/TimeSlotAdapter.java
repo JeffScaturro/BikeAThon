@@ -1,4 +1,4 @@
-package com.jeffscaturro.bikeathon.Adapters;
+package com.jeffscaturro.pikappaphibikeathon.Adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.jeffscaturro.bikeathon.Models.TimeSlot;
-import com.jeffscaturro.bikeathon.R;
+import com.jeffscaturro.pikappaphibikeathon.Models.TimeSlot;
+import com.jeffscaturro.pikappaphibikeathon.R;
 
 import java.util.List;
 

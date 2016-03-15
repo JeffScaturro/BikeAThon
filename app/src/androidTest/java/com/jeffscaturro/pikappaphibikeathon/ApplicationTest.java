@@ -1,4 +1,4 @@
-package com.jeffscaturro.bikeathon;
+package com.jeffscaturro.pikappaphibikeathon;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

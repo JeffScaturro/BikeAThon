@@ -1,4 +1,4 @@
-package com.jeffscaturro.bikeathon.Activities;
+package com.jeffscaturro.pikappaphibikeathon.Activities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,8 +20,8 @@ import android.widget.ImageView;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.jeffscaturro.bikeathon.Activities.Fragments.ItemFragment;
-import com.jeffscaturro.bikeathon.R;
+import com.jeffscaturro.pikappaphibikeathon.Activities.Fragments.ItemFragment;
+import com.jeffscaturro.pikappaphibikeathon.R;
 
 import java.util.Locale;
 

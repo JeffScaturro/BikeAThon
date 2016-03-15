@@ -1,4 +1,4 @@
-package com.jeffscaturro.bikeathon.Models;
+package com.jeffscaturro.pikappaphibikeathon.Models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;

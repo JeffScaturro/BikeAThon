@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jeffscaturro.bikeathon" >
+    package="com.jeffscaturro.pikappaphibikeathon" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.jeffscaturro.bikeathon.BTApplication"
+        android:name="com.jeffscaturro.pikappaphibikeathon.BTApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name="com.jeffscaturro.pikappaphibikeathon.Activities.MainActivity"
             android:label="@string/app_name" >
 
             <intent-filter>
